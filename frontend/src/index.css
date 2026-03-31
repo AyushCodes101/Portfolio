@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@300;400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-main: #060a11;
+  --bg-soft: #0c1320;
+  --text-main: #e9f4ff;
+  --text-muted: #9ab6d0;
+  --accent: #24dcf7;
+  --accent-soft: #0abfdc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text-main);
+  font-family: "Outfit", "Segoe UI", sans-serif;
+  background: radial-gradient(
+      circle at 15% 10%,
+      rgba(36, 220, 247, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(circle at 85% 20%, rgba(18, 129, 168, 0.26), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(40, 80, 140, 0.22), transparent 35%),
+    var(--bg-main);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(36, 220, 247, 0.25);
+  color: #f8fdff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.font-display {
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+.glass {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(173, 224, 255, 0.18);
+}
+
+.page-grain {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 0.45px, transparent 0.45px);
+  background-size: 4px 4px;
+  opacity: 0.18;
+}
