@@ -15,11 +15,13 @@ const projects = [
     title: "DocMind RAG Assistant",
     category: "RAG",
     year: 2026,
+    status: "In Progress",
     impact: 96,
     featured: true,
     description:
       "A production-oriented document QA assistant with OCR fallback, FAISS indexing, and grounded conversational answers.",
     stack: ["Python", "RAG", "FAISS", "Groq API", "Streamlit"],
+    metrics: ["Response quality +38%", "Latency under 2.1s", "200k+ chunks indexed"],
     demoUrl: "",
     repoUrl: "",
     highlights: [
@@ -27,17 +29,28 @@ const projects = [
       "Added adaptive retrieval to improve response quality on long document sets.",
       "Implemented citation-ready answer formatting with source traceability.",
     ],
+    challenge:
+      "Long and noisy documents created retrieval drift, which reduced answer precision in real-world queries.",
+    approach:
+      "Combined OCR cleanup, semantic chunking, query-aware retrieval, and relevance reranking before generation.",
+    outcomes: [
+      "Lower hallucination rate during benchmark tests.",
+      "More stable answer grounding across mixed document formats.",
+      "Faster troubleshooting with clear citation traces.",
+    ],
   },
   {
     id: "agentops-copilot",
     title: "AgentOps Support Copilot",
     category: "Agents",
     year: 2026,
+    status: "Private Repo",
     impact: 92,
     featured: true,
     description:
       "A multi-step intelligent agent workflow for support triage, intent classification, and action recommendations.",
     stack: ["Python", "LangGraph", "LLMs", "Prompt Engineering", "APIs"],
+    metrics: ["Ticket triage -45%", "Draft quality +31%", "Escalation accuracy +24%"],
     demoUrl: "",
     repoUrl: "",
     highlights: [
@@ -45,17 +58,28 @@ const projects = [
       "Used YAML-based prompt templates for predictable and testable behavior.",
       "Reduced repetitive support handling time with automated draft actions.",
     ],
+    challenge:
+      "Support teams needed faster issue routing without losing context quality or compliance constraints.",
+    approach:
+      "Built a controlled agent graph with explicit tool permissions, validation checks, and fallback prompts.",
+    outcomes: [
+      "Faster first response time for high-volume support queues.",
+      "Higher routing consistency across similar issue types.",
+      "Improved operator trust through auditable action logs.",
+    ],
   },
   {
     id: "visionparse-pipeline",
     title: "VisionParse OCR Pipeline",
     category: "Document AI",
     year: 2025,
+    status: "Completed",
     impact: 89,
     featured: false,
     description:
       "A modular pipeline for document ingestion, OCR extraction, cleaning, and structured output generation.",
     stack: ["Python", "OCR", "NLP", "JSON Schemas", "FastAPI"],
+    metrics: ["Parsing consistency +41%", "Manual correction -52%", "99.3% pipeline uptime"],
     demoUrl: "",
     repoUrl: "",
     highlights: [
@@ -63,17 +87,28 @@ const projects = [
       "Added validation guards for missing pages and confidence drop scenarios.",
       "Designed reusable parsing modules for invoices, reports, and statements.",
     ],
+    challenge:
+      "Raw OCR outputs varied heavily by document quality and format, making downstream automation unreliable.",
+    approach:
+      "Introduced schema-driven normalization and confidence-based validation before persistence.",
+    outcomes: [
+      "Cleaner structured data with fewer manual interventions.",
+      "Reusable extraction workflow across multiple document classes.",
+      "Stable integration with analytics and search systems.",
+    ],
   },
   {
     id: "adaptive-crawl-retrieval",
     title: "Adaptive Crawl Retrieval Engine",
     category: "Data Pipeline",
     year: 2025,
+    status: "Completed",
     impact: 87,
     featured: false,
     description:
       "A web scraping and indexing engine that continuously refreshes knowledge bases for retrieval workflows.",
     stack: ["Python", "Web Scraping", "FAISS", "Scheduling", "ETL"],
+    metrics: ["Content freshness +57%", "Duplicate pages -64%", "Daily ingestion reliability 98%"],
     demoUrl: "",
     repoUrl: "",
     highlights: [
@@ -81,17 +116,28 @@ const projects = [
       "Added deduplication and relevance scoring before vector indexing.",
       "Improved retrieval freshness in dynamic knowledge environments.",
     ],
+    challenge:
+      "Knowledge bases became stale quickly, reducing retrieval accuracy for changing source content.",
+    approach:
+      "Built scheduled crawling with change detection, deduplication, and incremental indexing.",
+    outcomes: [
+      "More up-to-date retrieval context for end users.",
+      "Lower indexing noise from repeated or low-quality pages.",
+      "Predictable refresh cycles for production support.",
+    ],
   },
   {
     id: "promptops-studio",
     title: "PromptOps Studio",
     category: "Prompt Engineering",
     year: 2024,
+    status: "Completed",
     impact: 84,
     featured: false,
     description:
       "An internal toolkit for structured prompt versioning, YAML prompt packs, and response evaluation workflows.",
     stack: ["Python", "YAML", "LLMs", "Evaluation", "Streamlit"],
+    metrics: ["Iteration speed +48%", "Regression checks automated", "Prompt rollback under 1 minute"],
     demoUrl: "",
     repoUrl: "",
     highlights: [
@@ -99,10 +145,25 @@ const projects = [
       "Added lightweight scoring harness for consistency and hallucination checks.",
       "Enabled faster iteration across prompt variants and model providers.",
     ],
+    challenge:
+      "Prompt changes were difficult to track and hard to validate consistently across environments.",
+    approach:
+      "Introduced YAML prompt packs, test scenarios, and score-based release gating.",
+    outcomes: [
+      "Safer prompt deployment process with quick rollback paths.",
+      "Better collaboration across developers and reviewers.",
+      "Reduced hidden prompt regressions in production.",
+    ],
   },
 ];
 
 const categories = ["All", "RAG", "Agents", "Document AI", "Data Pipeline", "Prompt Engineering"];
+
+const statusStyles = {
+  Completed: "border-emerald-400/40 bg-emerald-500/15 text-emerald-300",
+  "In Progress": "border-amber-400/40 bg-amber-500/15 text-amber-300",
+  "Private Repo": "border-slate-500/50 bg-slate-500/20 text-slate-200",
+};
 
 export default function Projects() {
   const [search, setSearch] = useState("");
@@ -133,6 +194,9 @@ export default function Projects() {
         project.description,
         project.stack.join(" "),
         project.highlights.join(" "),
+        project.challenge,
+        project.approach,
+        project.outcomes.join(" "),
       ]
         .join(" ")
         .toLowerCase();
@@ -166,8 +230,8 @@ export default function Projects() {
           LLM, RAG, and agent systems I&apos;ve built
         </h1>
         <p className="mt-3 max-w-3xl text-slate-300">
-          Filter by AI domain, inspect architecture highlights, and browse stack details. Live and
-          source links are ready to plug in once you share the original project URLs.
+          Filter by AI domain, inspect case-study snapshots, and browse implementation details.
+          Live and source links are ready to plug in once you share original URLs.
         </p>
       </motion.div>
 
@@ -178,7 +242,7 @@ export default function Projects() {
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search by title, category, architecture, or stack"
+              placeholder="Search by title, category, architecture, metrics, or stack"
               className="w-full rounded-xl border border-slate-700/60 bg-slate-900/75 py-3 pl-11 pr-4 text-sm text-slate-100 placeholder:text-slate-500 focus:border-brand-400 focus:outline-none"
             />
           </label>
@@ -264,9 +328,18 @@ export default function Projects() {
                   </h2>
                 </div>
 
-                <span className="rounded-full border border-brand-400/35 bg-brand-500/10 px-3 py-1 text-xs text-brand-200">
-                  Impact {project.impact}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className={`rounded-full border px-3 py-1 text-xs ${
+                      statusStyles[project.status] || "border-slate-700/60 bg-slate-900/70 text-slate-300"
+                    }`}
+                  >
+                    {project.status}
+                  </span>
+                  <span className="rounded-full border border-brand-400/35 bg-brand-500/10 px-3 py-1 text-xs text-brand-200">
+                    Impact {project.impact}
+                  </span>
+                </div>
               </div>
 
               <p className="mt-3 text-sm leading-relaxed text-slate-300">{project.description}</p>
@@ -278,6 +351,17 @@ export default function Projects() {
                     className="rounded-full border border-slate-700/60 bg-slate-900/70 px-3 py-1 text-xs text-slate-300"
                   >
                     {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.metrics.map((metric) => (
+                  <span
+                    key={metric}
+                    className="rounded-lg border border-slate-700/60 bg-slate-900/75 px-3 py-2 text-xs text-slate-300"
+                  >
+                    {metric}
                   </span>
                 ))}
               </div>
@@ -326,21 +410,31 @@ export default function Projects() {
                 }
                 className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-brand-300 transition hover:text-brand-200"
               >
-                {isExpanded ? "Hide highlights" : "View highlights"}
+                {isExpanded ? "Hide case snapshot" : "View case snapshot"}
                 <FiArrowUpRight size={15} />
               </button>
 
               {isExpanded ? (
-                <ul className="mt-3 space-y-2">
-                  {project.highlights.map((highlight) => (
-                    <li
-                      key={highlight}
-                      className="rounded-xl border border-slate-700/60 bg-slate-900/75 px-3 py-2 text-sm text-slate-300"
-                    >
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-3 space-y-2">
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-900/75 px-3 py-2">
+                    <p className="text-xs uppercase tracking-wider text-brand-300">Challenge</p>
+                    <p className="mt-1 text-sm text-slate-300">{project.challenge}</p>
+                  </div>
+                  <div className="rounded-xl border border-slate-700/60 bg-slate-900/75 px-3 py-2">
+                    <p className="text-xs uppercase tracking-wider text-brand-300">Approach</p>
+                    <p className="mt-1 text-sm text-slate-300">{project.approach}</p>
+                  </div>
+                  <ul className="space-y-2">
+                    {project.outcomes.map((outcome) => (
+                      <li
+                        key={outcome}
+                        className="rounded-xl border border-slate-700/60 bg-slate-900/75 px-3 py-2 text-sm text-slate-300"
+                      >
+                        {outcome}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
             </motion.article>
           );

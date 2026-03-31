@@ -2,6 +2,7 @@ import Hero from "../components/sections/Hero";
 import ImpactStats from "../components/sections/ImpactStats";
 import ServiceCards from "../components/sections/ServiceCards";
 import BuildJourney from "../components/sections/BuildJourney";
+import TechInsights from "../components/sections/TechInsights";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,7 @@ export default function Home() {
       <ImpactStats />
       <ServiceCards />
       <BuildJourney />
+      <TechInsights />
 
       <motion.section
         initial={{ opacity: 0, y: 20 }}

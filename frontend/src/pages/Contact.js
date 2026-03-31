@@ -6,15 +6,51 @@ import { FiCheckCircle, FiClock, FiCopy, FiMail, FiMapPin, FiMessageSquare } fro
 const INITIAL_FORM = {
   name: "",
   email: "",
-  projectType: "Web App",
+  projectType: "RAG Assistant",
   budget: "Not decided",
   timeline: "2-4 weeks",
   message: "",
 };
 
-const PROJECT_TYPES = ["Web App", "Dashboard", "E-commerce", "API Development", "UI Revamp"];
+const PROJECT_TYPES = [
+  "RAG Assistant",
+  "AI Agent Workflow",
+  "Document OCR Pipeline",
+  "PromptOps / Evaluation",
+  "Custom AI Integration",
+];
 const BUDGET_RANGES = ["Not decided", "< $1k", "$1k - $3k", "$3k - $8k", "$8k+"];
 const TIMELINES = ["1-2 weeks", "2-4 weeks", "1-2 months", "2+ months", "Flexible"];
+
+const TEMPLATE_PRESETS = [
+  {
+    id: "rag",
+    label: "RAG Assistant",
+    projectType: "RAG Assistant",
+    budget: "$1k - $3k",
+    timeline: "2-4 weeks",
+    message:
+      "I want to build a retrieval-augmented assistant for internal documents. The goal is grounded answers with citations and reliable search quality.",
+  },
+  {
+    id: "agent",
+    label: "AI Agent Workflow",
+    projectType: "AI Agent Workflow",
+    budget: "$3k - $8k",
+    timeline: "1-2 months",
+    message:
+      "I need a multi-step agent workflow that can classify tasks, call tools safely, and provide auditable outputs for operators.",
+  },
+  {
+    id: "ocr",
+    label: "OCR Pipeline",
+    projectType: "Document OCR Pipeline",
+    budget: "$1k - $3k",
+    timeline: "2-4 weeks",
+    message:
+      "I am looking for an OCR + document processing pipeline that extracts structured fields and connects to a searchable knowledge base.",
+  },
+];
 
 export default function Contact() {
   const [form, setForm] = useState(INITIAL_FORM);
@@ -23,6 +59,7 @@ export default function Contact() {
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState("");
 
   const apiBaseUrl = useMemo(
     () => process.env.REACT_APP_API_URL || "http://localhost:5000",
@@ -100,6 +137,7 @@ export default function Contact() {
       setSuccess("Message sent successfully. I will get back to you within 24 hours.");
       setForm(INITIAL_FORM);
       setFieldErrors({});
+      setSelectedTemplate("");
     } catch (requestError) {
       setError(
         requestError?.response?.data?.error ||
@@ -118,6 +156,20 @@ export default function Contact() {
     } catch (copyError) {
       setError("Unable to copy email right now. Please copy it manually.");
     }
+  };
+
+  const handleApplyTemplate = (template) => {
+    setSelectedTemplate(template.id);
+    setForm((prev) => ({
+      ...prev,
+      projectType: template.projectType,
+      budget: template.budget,
+      timeline: template.timeline,
+      message: template.message,
+    }));
+    setFieldErrors((prev) => ({ ...prev, message: "" }));
+    setError("");
+    setSuccess("");
   };
 
   return (
@@ -149,6 +201,29 @@ export default function Contact() {
           onSubmit={handleSubmit}
           className="rounded-3xl border border-slate-700/60 bg-slate-900/45 p-5 sm:p-6"
         >
+          <div className="mb-4 rounded-2xl border border-slate-700/60 bg-slate-900/70 p-4">
+            <p className="text-sm font-medium text-slate-100">Quick Start Brief</p>
+            <p className="mt-1 text-xs text-slate-400">
+              Pick a template to prefill the form and speed up your first message.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {TEMPLATE_PRESETS.map((template) => (
+                <button
+                  key={template.id}
+                  type="button"
+                  onClick={() => handleApplyTemplate(template)}
+                  className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
+                    selectedTemplate === template.id
+                      ? "bg-brand-500 text-slate-950"
+                      : "border border-slate-700/60 bg-slate-900 text-slate-300 hover:border-brand-400"
+                  }`}
+                >
+                  {template.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block">
               <span className="mb-2 block text-sm text-slate-300">Name</span>
@@ -158,7 +233,9 @@ export default function Contact() {
                 placeholder="Your name"
                 onChange={handleChange}
                 className={`w-full rounded-xl border bg-slate-900/70 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:outline-none ${
-                  fieldErrors.name ? "border-red-400/80" : "border-slate-700/60 focus:border-brand-400"
+                  fieldErrors.name
+                    ? "border-red-400/80"
+                    : "border-slate-700/60 focus:border-brand-400"
                 }`}
               />
               {fieldErrors.name ? <p className="mt-1 text-xs text-red-400">{fieldErrors.name}</p> : null}
@@ -314,7 +391,7 @@ export default function Contact() {
                   <FiMapPin size={15} className="text-brand-300" />
                   Location
                 </p>
-                <p className="mt-1">India · Open to remote collaboration</p>
+                <p className="mt-1">India | Open to remote collaboration</p>
               </div>
 
               <div className="rounded-2xl border border-slate-700/60 bg-slate-900/75 p-4">
