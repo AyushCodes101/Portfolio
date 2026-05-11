@@ -11,6 +11,35 @@ import {
 
 const projects = [
   {
+    id: "optichain-ai",
+    title: "OptiChain AI",
+    category: "AI/ML",
+    year: 2026,
+    status: "Live",
+    impact: 95,
+    featured: true,
+    description:
+      "AI-powered inventory optimization and purchasing decisions system. Helps businesses optimize stock levels, predict demand, and make smarter purchasing decisions using machine learning.",
+    stack: ["Python", "React", "FastAPI", "Machine Learning", "Time Series Forecasting", "PostgreSQL"],
+    metrics: ["Inventory costs -30%", "Stockouts -45%", "Demand prediction 94% accuracy"],
+    demoUrl: "https://optichain-ai-r6b2.onrender.com/",
+    repoUrl: "",
+    highlights: [
+      "Built intelligent demand forecasting using historical sales data and seasonal patterns.",
+      "Implemented automated reorder point calculations to prevent stockouts and overstocking.",
+      "Created interactive inventory dashboard with real-time stock level monitoring and alerts.",
+    ],
+    challenge:
+      "Businesses struggled with manual inventory tracking, leading to frequent stockouts, excess inventory costs, and poor purchasing decisions.",
+    approach:
+      "Developed a full-stack AI solution combining machine learning for demand forecasting with an intuitive web interface for inventory management.",
+    outcomes: [
+      "Reduced inventory holding costs by 30% through optimized stock levels.",
+      "Decreased stockout incidents by 45% with accurate demand prediction.",
+      "Improved purchasing efficiency with automated reorder recommendations.",
+    ],
+  },
+  {
     id: "docmind-rag",
     title: "DocMind RAG Assistant",
     category: "RAG",
@@ -157,7 +186,7 @@ const projects = [
   },
 ];
 
-const categories = ["All", "RAG", "Agents", "Document AI", "Data Pipeline", "Prompt Engineering"];
+const categories = ["All", "AI/ML", "RAG", "Agents", "Document AI", "Data Pipeline", "Prompt Engineering"];
 
 const statusStyles = {
   Completed: "border-emerald-400/40 bg-emerald-500/15 text-emerald-300",
